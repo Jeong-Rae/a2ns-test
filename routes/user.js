@@ -3,6 +3,14 @@ const db = require('../db');
 
 const crypto = require('crypto');
 
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: 사용자 정보 관련 API
+ */
+
+
 //userRouter 테스트
 router.get('/',async(req,res)=>{
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,6 +20,53 @@ router.get('/',async(req,res)=>{
 });
 
 //로그인
+/**
+ * @swagger
+ * /user/info/{id}:
+ *   get:
+ *     summary: 유저 로그인
+ *     description: id에 대한 유저의 로그인을 시도합니다.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User information retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 id:
+ *                   type: string
+ *                 champion:
+ *                   type: string
+ *                 tier:
+ *                   type: string
+ *                 winrate:
+ *                   type: string
+ *             example:
+ *               status: "ok"
+ *               message: ""
+ *               name: "김인페"
+ *               id: "123"
+ *               champion: "Champion Name"
+ *               tier: "Gold"
+ *               winrate: "55%"
+ *       400:
+ *         description: 잘못된 인자 입력
+ */
 router.get('/info/:id',async(req,res)=>{
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -77,6 +132,39 @@ router.get('/info/:id',async(req,res)=>{
 });
 
 //사용자 정보 수정
+/**
+ * @swagger
+ * /user/updateinfo/{id}:
+ *   put:
+ *     summary: 사용자 정보 수정
+ *     description: id 유저에 대한 정보를 수정합니다.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nowpassword:
+ *                 type: string
+ *               newpassword:
+ *                 type: string
+ *               champion:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: 사용자 정보 수정 성공
+ *       400:
+ *         description: 잘못된 인자
+ */
 router.put('/updateinfo/:id',async(req,res)=>{
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -141,6 +229,26 @@ router.put('/updateinfo/:id',async(req,res)=>{
 });
 
 //사용자 최근 전적 검색
+/**
+ * @swagger
+ * /user/match/{id}:
+ *   get:
+ *     summary: 최근 전적 검색
+ *     description: id 유저의 최근 전적을 검색해 옵니다.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 최근 전적 검색 성공
+ *       400:
+ *         description: 잘못된 인자 전달
+ */
 router.get('/match/:id',async(req,res)=>{
     res.header("Access-Control-Allow-Origin", "*");
 

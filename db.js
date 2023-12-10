@@ -1,3 +1,4 @@
+/*
 const SQL_info = require('./KEY/SQL_info.json')
 const mysql = require('mysql');
 var connection;
@@ -32,3 +33,4 @@ module.exports = {
     connect,
     return_connection
 }
+*/

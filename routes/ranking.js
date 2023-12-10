@@ -2,6 +2,40 @@ const mysql = require('mysql');
 const router = require('express').Router();
 const db = require('../db.js');
 
+/**
+ * @swagger
+ * tags:
+ *   name: Ranking
+ *   description: 랭킹 관련 API
+ */
+
+// 전체 랭킹 조회
+/**
+ * @swagger
+ * /ranking:
+ *   get:
+ *     summary: 전체 랭킹 조회
+ *     description: 전체 랭킹을 조회하여 결과를 배열로 반환합니다.
+ *     tags: [Ranking]
+ *     responses:
+ *       200:
+ *         description: 랭킹 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   tier:
+ *                     type: string
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal Server Error
+ */
 router.get('/', async(req,res)=> {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -33,6 +67,38 @@ router.get('/', async(req,res)=> {
     }
 });
 
+// 승률 업데이트
+/**
+ * @swagger
+ * /ranking/updateWinrate/{name}:
+ *   put:
+ *     summary: 승률 업데이트
+ *     description: name 유저의 승률을 변경합니다.
+ *     tags: [Ranking]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         description: Username to update winrate
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Winrate updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal Server Error
+ */
 router.put('/updateWinrate/:name', async(req,res)=> {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -102,6 +168,39 @@ router.put('/updateWinrate/:name', async(req,res)=> {
     }
 });
 
+// 상위 랭킹 사용자 조회
+/**
+ * @swagger
+ * /ranking/rank:
+ *   get:
+ *     summary: 상위 랭킹 사용자 조회
+ *     description: 랭킹중 상위 유저에 대한 정보를 조회합니다.
+ *     tags: [Ranking]
+ *     responses:
+ *       200:
+ *         description: Top ranking users retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   id:
+ *                     type: string
+ *                   champion:
+ *                     type: string
+ *                   tier:
+ *                     type: string
+ *                   winrate:
+ *                     type: string
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal Server Error
+ */
 router.get('/rank', async(req,res)=> {
     res.header("Access-Control-Allow-Origin", "*");
 
